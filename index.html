@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Irfan Khan — Essays</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap" rel="stylesheet">
+
+  <!-- Basic meta for minimal SEO -->
+  <meta name="description" content="Notes and long-form essays by Irfan Khan — technical, philosophical, and political writing." />
+  <meta name="theme-color" content="#ffffff" />
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --text: #0b1220;
+      --muted: #5b6670;
+      --accent: #0066ff;
+      --max-width: 760px;
+      --sidebar-width: 260px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .wrap{display:flex;gap:48px;max-width:1200px;margin:48px auto;padding:0 20px}
+
+    /* Sidebar */
+    aside{
+      width:var(--sidebar-width);
+      flex:0 0 var(--sidebar-width);
+    }
+    .brand{font-family:"Merriweather", Georgia, serif;font-size:18px;font-weight:700;margin-bottom:12px}
+    .subtitle{color:var(--muted);font-size:13px;margin-bottom:18px}
+    nav a{display:inline-block;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:8px}
+    .meta-block{margin-top:18px;padding-top:12px;border-top:1px solid #eee;font-size:13px;color:var(--muted)}
+
+    /* Main column */
+    main{flex:1;max-width:var(--max-width)}
+    .post-list{list-style:none;padding:0;margin:0}
+    .post-item{padding:18px 0;border-bottom:1px solid #f0f0f0}
+    .post-item h2{margin:0 0 6px;font-family:"Merriweather", Georgia, serif;font-weight:700;font-size:20px}
+    .post-item .byline{color:var(--muted);font-size:13px}
+    .post-item p{margin:8px 0 0;color:var(--muted)}
+
+    /* Article view */
+    article h1{font-family:"Merriweather", Georgia, serif;font-size:32px;margin:6px 0 6px}
+    article .lead{color:var(--muted);margin-bottom:20px}
+    article p{font-size:18px;margin:14px 0}
+    article img{max-width:100%;display:block;margin:18px 0}
+    pre, code{font-family:var(--mono);background:#f7f7f8;padding:6px 8px;border-radius:6px}
+    pre{padding:12px;overflow:auto}
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    a{color:var(--accent)}
+    .controls{display:flex;gap:12px;align-items:center}
+    .search{border:1px solid #e6e6e6;padding:8px;border-radius:8px;font-size:14px;width:100%}
+
+    footer{max-width:var(--max-width);margin:36px auto;color:var(--muted);font-size:13px;padding:0 20px}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .wrap{flex-direction:column;padding:12px}
+      aside{width:100%;order:2}
+      main{order:1}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside aria-label="Sidebar">
+      <div class="brand">Irfan Khan</div>
+      <div class="subtitle">Notes on Marxist theory, tech, politics, and philosophy. Essays are long-form, sometimes critical or mathy.</div>
+
+      <div class="controls" style="margin-bottom:12px">
+        <input class="search" id="q" placeholder="Search posts" />
+      </div>
+
+      <nav style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#archives">Archives</a>
+        <a href="#rss">RSS</a>
+      </nav>
+
+      <div class="meta-block">
+        <div><strong>Tags</strong></div>
+        <div style="margin-top:8px">
+          <span class="muted">capitalism</span> · <span class="muted">politics</span> · <span class="muted">philosophy</span>
+        </div>
+        <div style="margin-top:12px">Last updated: <span class="muted" id="last-updated">—</span></div>
+      </div>
+    </aside>
+
+    <main>
+      <!-- List view -->
+      <section id="home">
+        <ul class="post-list" id="posts"></ul>
+      </section>
+
+      <!-- Article template (hidden, filled by JS) -->
+      <article id="article" style="display:none">
+        <header>
+          <h1 id="article-title">Title</h1>
+          <div class="lead" id="article-byline">byline</div>
+        </header>
+        <section id="article-body"></section>
+      </article>
+
+    </main>
+  </div>
+
+  <footer>
+    <div>© <span id="year"></span> Irfan Khan · <a href="#privacy">Privacy</a></div>
+  </footer>
+
+  <script>
+    // Posts array
+    const postsData = [
+      {
+        id: '2025-09-01-talent-sabotage',
+        title: 'On talent sabotage in capitalism',
+        date: '2025-09-01',
+        excerpt: 'How capitalist structures unintentionally suppress creativity and talent.',
+        body: `
+<p>Capitalism often claims to reward innovation and talent. Yet, paradoxically, its structural incentives can end up sabotaging the very creativity it depends on. From short-term profit pressure to gatekeeping by entrenched elites, talent is often forced into conformity rather than liberated for experimentation.</p>
+<p>Consider how startups burn out promising young minds chasing investor returns, or how academia filters radical thinkers out of the tenure pipeline. The system optimizes for predictability and control, not brilliance. The result: wasted genius, diluted originality, and a culture where playing safe is safer than being extraordinary.</p>
+        `
+      },
+      {
+        id: '2025-09-02-irrational-right',
+        title: 'Irrational appeal of the right',
+        date: '2025-09-02',
+        excerpt: 'Why reactionary politics resonate emotionally despite weak logic.',
+        body: `
+<p>The right’s emotional pull is not rooted in rational policy but in its ability to tap into fear, nostalgia, and belonging. It offers certainty in uncertain times, painting complex problems with the brush of tradition and identity.</p>
+<p>While the rational left emphasizes nuance, statistics, and structural critique, the right speaks to primal instincts — safety, community, and continuity. This asymmetry makes it more persuasive to the masses, even when its solutions are logically flawed. To counter this, one must engage not only with reason but also with the emotional architecture of human beings.</p>
+        `
+      }
+    ];
+
+    const postsEl = document.getElementById('posts');
+    const articleEl = document.getElementById('article');
+    const articleTitle = document.getElementById('article-title');
+    const articleByline = document.getElementById('article-byline');
+    const articleBody = document.getElementById('article-body');
+    const lastUpdated = document.getElementById('last-updated');
+
+    function renderList(items){
+      postsEl.innerHTML = '';
+      items.forEach(p=>{
+        const li = document.createElement('li');
+        li.className = 'post-item';
+        li.innerHTML = `
+          <h2><a href="#" data-id="${p.id}" class="post-link">${p.title}</a></h2>
+          <div class="byline">${p.date} · <span class="muted">${p.excerpt}</span></div>
+        `;
+        postsEl.appendChild(li);
+      });
+      document.querySelectorAll('.post-link').forEach(a=>{
+        a.addEventListener('click', e=>{
+          e.preventDefault();
+          const id = a.getAttribute('data-id');
+          openPost(id);
+        });
+      });
+    }
+
+    function openPost(id){
+      const p = postsData.find(x=>x.id===id);
+      if(!p) return;
+      articleTitle.textContent = p.title;
+      articleByline.innerHTML = `${p.date} · <span class="muted">Edited by Irfan Khan</span>`;
+      articleBody.innerHTML = p.body;
+      articleEl.style.display = 'block';
+      articleEl.scrollIntoView({behavior:'smooth'});
+    }
+
+    document.getElementById('q').addEventListener('input', e=>{
+      const q = e.target.value.toLowerCase().trim();
+      if(!q){ renderList(postsData); return }
+      const filtered = postsData.filter(p=> (p.title + ' ' + p.excerpt + ' ' + p.body).toLowerCase().includes(q));
+      renderList(filtered);
+    });
+
+    renderList(postsData);
+    document.getElementById('year').textContent = new Date().getFullYear();
+    lastUpdated.textContent = postsData.length ? postsData[0].date : '—';
+  </script>
+</body>
+</html>
