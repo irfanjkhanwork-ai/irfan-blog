@@ -128,7 +128,7 @@
   </footer>
 
   <script>
-    // Posts array
+    // Posts array (first essay kept exactly as you provided)
     const postsData = [
       {
         id: '2025-09-08-talent-sabotage',
@@ -215,7 +215,7 @@ values. These are not material necessities but symbolic constructs. Yet people r
 pride in them and even sacrifice their lives for them. Marx calls these ideological 
 superstructures, mechanisms that mask the material conditions of existence and give people 
 the illusion of meaning. As he argued in his critique of religion, such attachments act like an 
-“opium of the people” , a rather metaphorical phase that entails soothing the pains of life by 
+“opium of the people”, a rather metaphorical phrase that entails soothing the pains of life by 
 offering a higher but ultimately illusory purpose.</p>
 
 <p>Let’s look at the life of a common person. Imagine someone between the middle class and just 
@@ -234,13 +234,13 @@ personal accomplishments but venerating the collective as if it were sacred.</p>
 
 <p>And this issue remains disproportionately high in capitalist society. As noted mathematically it's 
 impossible for everyone to live a satisfactory life that would allow them to avoid the conditions 
-which means a man finds solace in said superstructure. This is not a flaw within our society this 
+which means a man finds solace in said superstructure. This is not a flaw within our society — this 
 is a fundamental issue within capitalism, not everyone can achieve said things which leads to 
 the inevitable bitterness.</p>
 
 <p>Nietzsche for one had a very interesting take on this: He pushes this critique further by 
 dissecting the character types behind religious passion. He argues that devotion to God is rarely 
-pure and universal, instead, it often arises from psychological needs and dispositions. He 
+pure and universal, instead it often arises from psychological needs and dispositions. He 
 identifies, for instance, the “churlish, honest-hearted, and importunate” type: aggressive, lacking 
 refinement (delicatezza), and clinging to God in a stark, unsophisticated way. A second type 
 resembles the elevated slave, whose passion for God stems from fawning gratitude at being 
@@ -260,7 +260,7 @@ insecure, nationalism a mask for insignificance, and culture a substitute for cr
 <p>The tragedy is that people are willing to die for fictions. What they take as noble passion is often 
 the product of resentment, ideology, or imagined community. The task, then, is not to suppress 
 the human search for meaning but to redirect it. True pride must come not from inherited 
-categories, but from universal projects justice, knowledge, creativity, and the preservation of life 
+categories, but from universal projects — justice, knowledge, creativity, and the preservation of life 
 itself. Only then can meaning escape the cycle of illusion and hostility.</p>
 
 <p><strong>References</strong></p>
@@ -275,16 +275,19 @@ itself. Only then can meaning escape the cycle of illusion and hostility.</p>
       }
     ];
 
+    // DOM refs
     const postsEl = document.getElementById('posts');
     const articleEl = document.getElementById('article');
     const articleTitle = document.getElementById('article-title');
     const articleByline = document.getElementById('article-byline');
     const articleBody = document.getElementById('article-body');
     const lastUpdated = document.getElementById('last-updated');
+    const searchInput = document.getElementById('q');
 
-    function renderList(items){
+    // Render list of posts
+    function renderList(items) {
       postsEl.innerHTML = '';
-      items.forEach(p=>{
+      items.forEach(p => {
         const li = document.createElement('li');
         li.className = 'post-item';
         li.innerHTML = `
@@ -293,16 +296,51 @@ itself. Only then can meaning escape the cycle of illusion and hostility.</p>
         `;
         postsEl.appendChild(li);
       });
-      document.querySelectorAll('.post-link').forEach(a=>{
-        a.addEventListener('click', e=>{
+
+      // attach handlers
+      document.querySelectorAll('.post-link').forEach(a => {
+        a.addEventListener('click', function (e) {
           e.preventDefault();
-          const id = a.getAttribute('data-id');
+          const id = this.getAttribute('data-id');
           openPost(id);
         });
       });
     }
 
-    function openPost(id){
-      const p = postsData.find(x=>x.id===id);
-      if(!p) return;
-      articleTitle.textContent = p.title
+    // Open a single post
+    function openPost(id) {
+      const p = postsData.find(x => x.id === id);
+      if (!p) return;
+      articleTitle.textContent = p.title;
+      articleByline.innerHTML = `${p.date} · <span class="muted">Edited by Irfan Khan</span>`;
+      articleBody.innerHTML = p.body;
+      articleEl.style.display = 'block';
+      // scroll into view for UX
+      articleEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Search/filter
+    function handleSearch(e) {
+      const q = (e.target.value || '').toLowerCase().trim();
+      if (!q) {
+        renderList(postsData);
+        return;
+      }
+      const filtered = postsData.filter(p =>
+        (p.title + ' ' + p.excerpt + ' ' + p.body).toLowerCase().includes(q)
+      );
+      renderList(filtered);
+    }
+
+    // initial render
+    renderList(postsData);
+
+    // bind search
+    searchInput.addEventListener('input', handleSearch);
+
+    // footer info
+    document.getElementById('year').textContent = new Date().getFullYear();
+    lastUpdated.textContent = postsData.length ? postsData[0].date : '—';
+  </script>
+</body>
+</html>
