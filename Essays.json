@@ -1,0 +1,16 @@
+{
+  "essays": [
+    {
+      "title": "World Without Witness",
+      "file": "world-without-witness.html",
+      "date": "2025-10-31"
+    }
+  ],
+  "papers": [
+    {
+      "title": "Logical and Dynamical Ceilings in Reinforcement Learning: Why Scaling Alone Cannot Yield General Intelligence",
+      "link": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5512098",
+      "date": "2025-10-31"
+    }
+  ]
+}
