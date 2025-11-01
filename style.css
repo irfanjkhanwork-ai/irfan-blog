@@ -1,11 +1,13 @@
+/* Dark Mode — Irfan Khan Blog Theme */
+
 body {
-  font-family: Georgia, serif;
-  line-height: 1.7;
+  font-family: "Georgia", serif;
+  line-height: 1.8;
   max-width: 750px;
   margin: 50px auto;
   padding: 0 20px;
-  background: #fafafa;
-  color: #222;
+  background-color: #0e0e0e;  /* pure black-gray background */
+  color: #eaeaea;             /* soft white text */
 }
 
 header {
@@ -16,21 +18,24 @@ header {
 h1 {
   font-size: 2.4em;
   margin-bottom: 0.2em;
+  color: #ffffff;
 }
 
 h2 {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #333;
   padding-bottom: 0.3em;
   margin-top: 2em;
-  color: #111;
+  color: #dddddd;
 }
 
 a {
   text-decoration: none;
-  color: #0056b3;
+  color: #64b5ff; /* soft blue link */
+  transition: color 0.2s ease;
 }
 
 a:hover {
+  color: #99ccff;
   text-decoration: underline;
 }
 
@@ -43,15 +48,25 @@ li {
   margin: 0.8em 0;
 }
 
-#papers {
-  border-top: 1px solid #ddd;
-  padding-top: 30px;
-  margin-top: 40px;
-}
-
 footer {
   text-align: center;
   font-size: 0.9em;
-  color: #555;
+  color: #777;
   margin-top: 60px;
+}
+
+#papers-section {
+  margin-top: 60px;
+  border-top: 1px solid #222;
+  padding-top: 30px;
+}
+
+/* Add a smooth fade-in animation */
+body {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
